@@ -97,6 +97,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework.authtoken',
     'rest_auth',
+    'drf_yasg',
     'django_elasticsearch_dsl',
     'django_fsm',
     'fsm_admin',
@@ -642,4 +643,16 @@ SHOP_SENDCLOUD = {
 
 SHOP_CASCADE_FORMS = {
     'CustomerForm': 'myshop.forms.CustomerForm',
+}
+
+# Swagger settings.
+SWAGGER_SETTINGS = {
+    "SECURITY_DEFINITIONS": {
+        "Basic": {"type": "basic"},
+        "DRF Token": {
+            "type": "apiKey",
+            "name": "Authorization",
+            "in": "header",
+        },
+    }
 }
