@@ -5,7 +5,7 @@ They are not intended for general purpose and can be deleted thereafter.
 from rest_framework import serializers
 from shop.serializers.catalog import CMSPagesField, ImagesField, ValueRelatedField
 from myshop.models import (Commodity, SmartCard, SmartPhoneModel, SmartPhoneVariant,
-                           Manufacturer, OperatingSystem, ProductPage, ProductImage)
+                           Manufacturer, OperatingSystem, ProductPage, ProductImage, Book)
 from .translation import TranslatedFieldsField, TranslatedField, TranslatableModelSerializerMixin
 
 
@@ -44,6 +44,15 @@ class SmartCardSerializer(TranslatableModelSerializerMixin, ProductSerializer):
 
     class Meta(ProductSerializer.Meta):
         model = SmartCard
+
+
+class BookSerializer(TranslatableModelSerializerMixin, ProductSerializer):
+    multilingual = TranslatedFieldsField(
+        help_text="Helper to convert multilingual data into single field.",
+    )
+
+    class Meta(ProductSerializer.Meta):
+        model = Book
 
 
 class SmartphoneVariantSerializer(serializers.ModelSerializer):

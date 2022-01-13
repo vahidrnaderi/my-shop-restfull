@@ -1,6 +1,7 @@
 import random
 from django.core.management.base import BaseCommand
-from myshop.models import Commodity, CommodityInventory, SmartCard, SmartCardInventory, SmartPhoneVariant, SmartPhoneInventory
+from myshop.models import Commodity, CommodityInventory, SmartCard, SmartCardInventory, SmartPhoneVariant,\
+    SmartPhoneInventory, Book, BookInventory
 
 
 class Command(BaseCommand):
@@ -16,6 +17,11 @@ class Command(BaseCommand):
         for smart_card in SmartCard.objects.all():
             SmartCardInventory.objects.create(
                 product=smart_card,
+                quantity=random.randint(0, 55)
+            )
+        for book in Book.objects.all():
+            BookInventory.objects.create(
+                product=book,
                 quantity=random.randint(0, 55)
             )
         for smart_phone in SmartPhoneVariant.objects.all():

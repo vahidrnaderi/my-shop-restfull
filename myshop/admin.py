@@ -17,9 +17,9 @@ from adminsortable2.admin import SortableAdminMixin, PolymorphicSortableAdminMix
 from shop.admin.product import CMSPageAsCategoryMixin, UnitPriceMixin, ProductImageInline, InvalidateProductCacheMixin, SearchProductIndexMixin, CMSPageFilter
 from polymorphic.admin import (PolymorphicParentModelAdmin, PolymorphicChildModelAdmin,
                                PolymorphicChildModelFilter)
-from myshop.models import Product, Commodity, SmartPhoneVariant, SmartPhoneModel, OperatingSystem
+from myshop.models import Product, Commodity, SmartPhoneVariant, SmartPhoneModel, OperatingSystem, Book
 from myshop.models import Manufacturer, SmartCard
-from myshop.models import CommodityInventory, SmartCardInventory, SmartPhoneInventory
+from myshop.models import CommodityInventory, SmartCardInventory, SmartPhoneInventory, BookInventory
 
 
 admin.site.site_header = "My SHOP Administration"
@@ -43,6 +43,11 @@ class CommodityInventoryAdmin(admin.StackedInline):
 
 class SmartCardInventoryAdmin(admin.StackedInline):
     model = SmartCardInventory
+    extra = 0
+
+
+class BookInventoryAdmin(admin.StackedInline):
+    model = BookInventory
     extra = 0
 
 
@@ -86,6 +91,30 @@ class SmartCardAdmin(InvalidateProductCacheMixin, SearchProductIndexMixin, Sorta
     )
     filter_horizontal = ['cms_pages']
     inlines = [ProductImageInline, SmartCardInventoryAdmin]
+    prepopulated_fields = {'slug': ['product_name']}
+
+
+@admin.register(Book)
+class BookAdmin(InvalidateProductCacheMixin, SearchProductIndexMixin, SortableAdminMixin, TranslatableAdmin, FrontendEditableAdminMixin,
+                     CMSPageAsCategoryMixin, PlaceholderAdminMixin, PolymorphicChildModelAdmin):
+    base_model = Product
+    fieldsets = (
+        (None, {
+            'fields': [
+                ('product_name', 'slug'),
+                ('product_code', 'unit_price'),
+                'active',
+            ],
+        }),
+        (_("Translatable Fields"), {
+            'fields': ['caption', 'description'],
+        }),
+        (_("Properties"), {
+            'fields': ['manufacturer', 'Author', 'book_type'],
+        }),
+    )
+    filter_horizontal = ['cms_pages']
+    inlines = [ProductImageInline, BookInventoryAdmin]
     prepopulated_fields = {'slug': ['product_name']}
 
 
@@ -159,7 +188,7 @@ class SmartPhoneVariantAdmin(admin.ModelAdmin):
 @admin.register(Product)
 class ProductAdmin(PolymorphicSortableAdminMixin, PolymorphicParentModelAdmin):
     base_model = Product
-    child_models = [SmartPhoneModel, SmartCard, Commodity]
+    child_models = [SmartPhoneModel, SmartCard, Commodity, Book]
     list_display = ['product_name', 'get_price', 'product_type', 'active']
     list_display_links = ['product_name']
     search_fields = ['product_name']

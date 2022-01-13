@@ -57,7 +57,7 @@ class Command(BaseCommand):
     def create_polymorphic_subcategories(self):
         from cms.models.pagemodel import Page
         from shop.management.commands.shop import Command as ShopCommand
-        from myshop.models import Commodity, SmartCard, SmartPhoneModel
+        from myshop.models import Commodity, SmartCard, SmartPhoneModel, Book
 
         apphook = ShopCommand.get_installed_apphook('CatalogListCMSApp')
         catalog_pages = Page.objects.drafts().filter(
@@ -67,6 +67,8 @@ class Command(BaseCommand):
             apphook, catalog_pages.first(), "Earphones", Commodity)
         self.create_subcategory(
             apphook, catalog_pages.first(), "Smart Cards", SmartCard)
+        self.create_subcategory(
+            apphook, catalog_pages.first(), "Books", Book)
         self.create_subcategory(
             apphook, catalog_pages.first(), "Smart Phones", SmartPhoneModel)
 

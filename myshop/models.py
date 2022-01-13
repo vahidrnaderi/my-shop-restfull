@@ -232,6 +232,66 @@ class SmartCard(AvailableProductMixin, Product):
     default_manager = ProductManager()
 
 
+class Book(AvailableProductMixin, Product):
+    multilingual = TranslatedFields(
+        description=HTMLField(
+            verbose_name=_("Description"),
+            configuration='CKEDITOR_SETTINGS_DESCRIPTION',
+            help_text=_(
+                "Full description used in the catalog's detail view of Books."),
+        ),
+    )
+    unit_price = MoneyField(
+        _("Unit price"),
+        decimal_places=3,
+        help_text=_("Net price for this product"),
+    )
+
+    book_type = models.CharField(
+        _("Book Type"),
+        choices=[2 * ('{}{}'.format(s, t),)
+                 for t in ['Paper Book', 'PDF', 'Audio'] for s in ['', 'Book ']],
+        max_length=15,
+    )
+
+    # speed = models.CharField(
+    #     _("Transfer Speed"),
+    #     choices=[(str(s), "{} MB/s".format(s))
+    #              for s in [4, 20, 30, 40, 48, 80, 95, 280]],
+    #     max_length=8,
+    # )
+
+    product_code = models.CharField(
+        _("Product code"),
+        max_length=255,
+        unique=True,
+    )
+
+    Author = models.CharField(
+        _("Author name"),
+        max_length=255,
+        unique=True,
+    )
+
+    # storage = models.PositiveIntegerField(
+    #     _("Storage Capacity"),
+    #     help_text=_("Storage capacity in GB"),
+    # )
+
+    class Meta:
+        verbose_name = _("Book")
+        verbose_name_plural = _("Books")
+        ordering = ['order']
+
+    # filter expression used to lookup for a product item using the Select2 widget
+    lookup_fields = ['product_code__startswith', 'product_name__icontains']
+
+    def get_price(self, request):
+        return self.unit_price
+
+    default_manager = ProductManager()
+
+
 class OperatingSystem(models.Model):
     name = models.CharField(
         _("Name"),
@@ -445,6 +505,21 @@ class SmartCardInventory(BaseInventory):
     )
 
 
+class BookInventory(BaseInventory):
+    product = models.ForeignKey(
+        Book,
+        on_delete=models.CASCADE,
+        related_name='inventory_set',
+    )
+
+    quantity = models.PositiveIntegerField(
+        _("Quantity"),
+        default=0,
+        validators=[MinValueValidator(0)],
+        help_text=_("Available quantity in stock")
+    )
+
+
 class SmartPhoneInventory(BaseInventory):
     product = models.ForeignKey(
         SmartPhoneVariant,
@@ -458,3 +533,5 @@ class SmartPhoneInventory(BaseInventory):
         validators=[MinValueValidator(0)],
         help_text=_("Available quantity in stock")
     )
+
+
