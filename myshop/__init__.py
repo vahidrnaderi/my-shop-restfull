@@ -15,5 +15,5 @@ Release logic:
 11. twine upload dist/django-shop-{new version}.tar.gz
 """
 
-__version__ = '0.1.1'
+__version__ = '0.1.2'
 default_app_config = 'myshop.apps.MySHOP'
