@@ -9,7 +9,7 @@ from drf_yasg import openapi
 from drf_yasg.views import get_schema_view
 from rest_framework import permissions
 from django.http import HttpResponse
-from cms.sitemaps import CMSSitemap
+# from cms.sitemaps import CMSSitemap
 # from myshop.sitemap import ProductSitemap
 
 # sitemaps = {'cmspages': CMSSitemap,
@@ -36,12 +36,13 @@ schema_view = get_schema_view(
 
 i18n_urls = (
     url(r'^admin/', admin.site.urls),
-    url(r'^', include('cms.urls')),
+    # url(r'^', include('cms.urls')),
+    url(r'', include('shop.urls')),
 )
 urlpatterns = [
     url(r'^robots\.txt$', render_robots),
     # url(r'^sitemap\.xml$', sitemap, {'sitemaps': sitemaps}, name='sitemap'),
-    url(r'^shop/', include('shop.urls')),
+    # url(r'^shop/', include('shop.urls')),
     # Swagger.
     path(
         "swagger/",

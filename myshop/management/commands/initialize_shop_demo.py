@@ -54,43 +54,43 @@ class Command(BaseCommand):
             self.stdout.write("Project myshop already initialized")
             call_command('migrate')
 
-    def create_polymorphic_subcategories(self):
-        from cms.models.pagemodel import Page
-        from shop.management.commands.shop import Command as ShopCommand
-        from myshop.models import Commodity, SmartCard, SmartPhoneModel, Book
+    # def create_polymorphic_subcategories(self):
+    #     from cms.models.pagemodel import Page
+    #     from shop.management.commands.shop import Command as ShopCommand
+    #     from shop.models import Commodity, SmartCard, SmartPhoneModel, Book
+    #
+    #     apphook = ShopCommand.get_installed_apphook('CatalogListCMSApp')
+    #     catalog_pages = Page.objects.drafts().filter(
+    #         application_urls=apphook.__class__.__name__)
+    #     assert catalog_pages.count() == 1, "There should be only one catalog page"
+    #     self.create_subcategory(
+    #         apphook, catalog_pages.first(), "Earphones", Commodity)
+    #     self.create_subcategory(
+    #         apphook, catalog_pages.first(), "Smart Cards", SmartCard)
+    #     self.create_subcategory(
+    #         apphook, catalog_pages.first(), "Books", Book)
+    #     self.create_subcategory(
+    #         apphook, catalog_pages.first(), "Smart Phones", SmartPhoneModel)
 
-        apphook = ShopCommand.get_installed_apphook('CatalogListCMSApp')
-        catalog_pages = Page.objects.drafts().filter(
-            application_urls=apphook.__class__.__name__)
-        assert catalog_pages.count() == 1, "There should be only one catalog page"
-        self.create_subcategory(
-            apphook, catalog_pages.first(), "Earphones", Commodity)
-        self.create_subcategory(
-            apphook, catalog_pages.first(), "Smart Cards", SmartCard)
-        self.create_subcategory(
-            apphook, catalog_pages.first(), "Books", Book)
-        self.create_subcategory(
-            apphook, catalog_pages.first(), "Smart Phones", SmartPhoneModel)
-
-    def create_subcategory(self, apphook, parent_page, title, product_type):
-        from cms.api import create_page
-        from cms.constants import TEMPLATE_INHERITANCE_MAGIC
-        from cms.utils.i18n import get_public_languages
-        from shop.management.commands.shop import Command as ShopCommand
-        from shop.models.product import ProductModel
-        from shop.models.related import ProductPageModel
-
-        language = get_public_languages()[0]
-        page = create_page(
-            title,
-            TEMPLATE_INHERITANCE_MAGIC,
-            language,
-            apphook=apphook,
-            created_by="manage.py initialize_shop_demo",
-            in_navigation=True,
-            parent=parent_page,
-        )
-        ShopCommand.publish_in_all_languages(page)
-        page = page.get_public_object()
-        for product in ProductModel.objects.instance_of(product_type):
-            ProductPageModel.objects.create(page=page, product=product)
+    # def create_subcategory(self, apphook, parent_page, title, product_type):
+    #     from cms.api import create_page
+    #     from cms.constants import TEMPLATE_INHERITANCE_MAGIC
+    #     from cms.utils.i18n import get_public_languages
+    #     from shop.management.commands.shop import Command as ShopCommand
+    #     from shop.shopmodels.product import ProductModel
+    #     from shop.shopmodels.related import ProductPageModel
+    #
+    #     language = get_public_languages()[0]
+    #     page = create_page(
+    #         title,
+    #         TEMPLATE_INHERITANCE_MAGIC,
+    #         language,
+    #         apphook=apphook,
+    #         created_by="manage.py initialize_shop_demo",
+    #         in_navigation=True,
+    #         parent=parent_page,
+    #     )
+    #     ShopCommand.publish_in_all_languages(page)
+    #     page = page.get_public_object()
+    #     for product in ProductModel.objects.instance_of(product_type):
+    #         ProductPageModel.objects.create(page=page, product=product)

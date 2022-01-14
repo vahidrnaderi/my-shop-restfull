@@ -4,25 +4,29 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.core.validators import MinValueValidator
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
-from djangocms_text_ckeditor.fields import HTMLField
+# from djangocms_text_ckeditor.fields import HTMLField
 from polymorphic.query import PolymorphicQuerySet
 from parler.managers import TranslatableManager, TranslatableQuerySet
 from parler.models import TranslatableModelMixin, TranslatedFieldsModel, TranslatedFields
 from parler.fields import TranslatedField
-from cms.models.fields import PlaceholderField
+# from cms.models.fields import PlaceholderField
 from shop.money import Money, MoneyMaker
 from shop.money.fields import MoneyField
-from shop.models.product import BaseProduct, BaseProductManager, CMSPageReferenceMixin
-from shop.models.inventory import BaseInventory, AvailableProductMixin
-from shop.models.defaults.cart import Cart
-from shop.models.defaults.cart_item import CartItem
-from shop.models.order import BaseOrderItem
-from shop.models.defaults.delivery import Delivery
-from shop.models.defaults.delivery_item import DeliveryItem
-from shop.models.defaults.order import Order
-from shop.models.defaults.mapping import ProductPage, ProductImage
-from shop_sendcloud.models.address import BillingAddress, ShippingAddress
-from shop_sendcloud.models.customer import Customer
+# from shop.shopmodels.product import BaseProduct, BaseProductManager, CMSPageReferenceMixin
+from shop.shopmodels.product import BaseProduct, BaseProductManager
+from shop.shopmodels.inventory import BaseInventory, AvailableProductMixin
+from shop.shopmodels.defaults.cart import Cart, CartItem
+# from shop.shopmodels.defaults.cart_item import CartItem
+from shop.shopmodels.order import BaseOrderItem
+from shop.shopmodels.defaults.delivery import Delivery, DeliveryItem
+# from shop.shopmodels.defaults.delivery_item import DeliveryItem
+from shop.shopmodels.defaults.order import Order
+# from shop.shopmodels.defaults.mapping import ProductPage, ProductImage
+from shop.shopmodels.defaults.mapping import ProductImage
+# from shop_sendcloud.models.address import BillingAddress, ShippingAddress
+# from shop_sendcloud.models.customer import Customer
+from shop.shopmodels.defaults.address import BillingAddress, ShippingAddress
+from shop.shopmodels.defaults.customer import Customer
 
 
 __all__ = ['Cart', 'CartItem', 'Order', 'Delivery', 'DeliveryItem',
@@ -67,7 +71,8 @@ class ProductManager(BaseProductManager, TranslatableManager):
         return qs.prefetch_related('translations')
 
 
-class Product(CMSPageReferenceMixin, TranslatableModelMixin, BaseProduct):
+# class Product(CMSPageReferenceMixin, TranslatableModelMixin, BaseProduct):
+class Product(TranslatableModelMixin, BaseProduct):
     """
     Base class to describe a polymorphic product. Here we declare common fields available in all of
     our different product types. These common fields are also used to build up the view displaying
@@ -98,11 +103,11 @@ class Product(CMSPageReferenceMixin, TranslatableModelMixin, BaseProduct):
         db_index=True,
     )
 
-    cms_pages = models.ManyToManyField(
-        'cms.Page',
-        through=ProductPage,
-        help_text=_("Choose list view this product shall appear on."),
-    )
+    # cms_pages = models.ManyToManyField(
+    #     'cms.Page',
+    #     through=ProductPage,
+    #     help_text=_("Choose list view this product shall appear on."),
+    # )
 
     images = models.ManyToManyField(
         'filer.Image',
@@ -135,11 +140,13 @@ class ProductTranslation(TranslatedFieldsModel):
         null=True,
     )
 
-    caption = HTMLField(
+    # caption = HTMLField(
+    caption = models.CharField(
+        max_length=255,
         verbose_name=_("Caption"),
         blank=True,
         null=True,
-        configuration='CKEDITOR_SETTINGS_CAPTION',
+        # configuration='CKEDITOR_SETTINGS_CAPTION',
         help_text=_(
             "Short description used in the catalog's list view of products."),
     )
@@ -165,8 +172,8 @@ class Commodity(AvailableProductMixin, Product):
     )
 
     # controlling the catalog
-    placeholder = PlaceholderField("Commodity Details")
-    show_breadcrumb = True  # hard coded to always show the product's breadcrumb
+    # placeholder = PlaceholderField("Commodity Details")
+    # show_breadcrumb = True  # hard coded to always show the product's breadcrumb
 
     class Meta:
         verbose_name = _("Commodity")
@@ -180,9 +187,11 @@ class Commodity(AvailableProductMixin, Product):
 
 class SmartCard(AvailableProductMixin, Product):
     multilingual = TranslatedFields(
-        description=HTMLField(
+        # description=HTMLField(
+        description=models.CharField(
+            max_length=255,
             verbose_name=_("Description"),
-            configuration='CKEDITOR_SETTINGS_DESCRIPTION',
+            # configuration='CKEDITOR_SETTINGS_DESCRIPTION',
             help_text=_(
                 "Full description used in the catalog's detail view of Smart Cards."),
         ),
@@ -234,9 +243,11 @@ class SmartCard(AvailableProductMixin, Product):
 
 class Book(AvailableProductMixin, Product):
     multilingual = TranslatedFields(
-        description=HTMLField(
+        # description=HTMLField(
+        description=models.CharField(
+            max_length=255,
             verbose_name=_("Description"),
-            configuration='CKEDITOR_SETTINGS_DESCRIPTION',
+            # configuration='CKEDITOR_SETTINGS_DESCRIPTION',
             help_text=_(
                 "Full description used in the catalog's detail view of Books."),
         ),
@@ -387,9 +398,11 @@ class SmartPhoneModel(Product):
     )
 
     multilingual = TranslatedFields(
-        description=HTMLField(
+        # description=HTMLField(
+        description=models.CharField(
+            max_length=255,
             verbose_name=_("Description"),
-            configuration='CKEDITOR_SETTINGS_DESCRIPTION',
+            # configuration='CKEDITOR_SETTINGS_DESCRIPTION',
             help_text=_(
                 "Full description used in the catalog's detail view of Smart Phones."),
         ),

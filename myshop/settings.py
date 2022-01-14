@@ -14,8 +14,8 @@ import os
 from django.urls import reverse_lazy
 from django.utils.text import format_lazy
 from django.utils.translation import ugettext_lazy as _
-from cmsplugin_cascade.bootstrap4.mixins import BootstrapUtilities
-from cmsplugin_cascade.extra_fields.config import PluginExtraFieldsConfig
+# from cmsplugin_cascade.bootstrap4.mixins import BootstrapUtilities
+# from cmsplugin_cascade.extra_fields.config import PluginExtraFieldsConfig
 
 SHOP_APP_LABEL = 'myshop'
 BASE_DIR = os.path.dirname(__file__)
@@ -58,7 +58,7 @@ USE_THOUSAND_SEPARATOR = True
 
 # replace django.contrib.auth.models.User by implementation
 # allowing to login via email address
-AUTH_USER_MODEL = 'email_auth.User'
+# AUTH_USER_MODEL = 'email_auth.User'
 
 AUTH_PASSWORD_VALIDATORS = [{
     'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator',
@@ -74,7 +74,7 @@ AUTHENTICATION_BACKENDS = [
 
 INSTALLED_APPS = [
     'django.contrib.auth',
-    'email_auth',
+    # 'email_auth',
     'polymorphic',
     # deprecated: 'djangocms_admin_style',
     'django.contrib.contenttypes',
@@ -84,16 +84,16 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.sitemaps',
-    'djangocms_text_ckeditor',
-    'django_select2',
-    'cmsplugin_cascade',
-    'cmsplugin_cascade.clipboard',
-    'cmsplugin_cascade.sharable',
-    'cmsplugin_cascade.extra_fields',
-    'cmsplugin_cascade.icon',
-    'cmsplugin_cascade.segmentation',
-    'cms_bootstrap',
-    'adminsortable2',
+    # 'djangocms_text_ckeditor',
+    # 'django_select2',
+    # 'cmsplugin_cascade',
+    # 'cmsplugin_cascade.clipboard',
+    # 'cmsplugin_cascade.sharable',
+    # 'cmsplugin_cascade.extra_fields',
+    # 'cmsplugin_cascade.icon',
+    # 'cmsplugin_cascade.segmentation',
+    # 'cms_bootstrap',
+    # 'adminsortable2',
     'rest_framework',
     'rest_framework.authtoken',
     'rest_auth',
@@ -102,20 +102,20 @@ INSTALLED_APPS = [
     'django_fsm',
     'fsm_admin',
     'djng',
-    'cms',
+    # 'cms',
     'menus',
     'treebeard',
     'sass_processor',
-    'sekizai',
+    # 'sekizai',
     'django_filters',
     'filer',
     'easy_thumbnails',
     'easy_thumbnails.optimize',
     'parler',
     'post_office',
-    'shop_paypal',
+    # 'shop_paypal',
     'shop_stripe',
-    'shop_sendcloud',
+    # 'shop_sendcloud',
     'shop',
     'myshop',
 ]
@@ -130,12 +130,12 @@ MIDDLEWARE = [
     'django.middleware.locale.LocaleMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.gzip.GZipMiddleware',
-    'cms.middleware.language.LanguageCookieMiddleware',
-    'cms.middleware.user.CurrentUserMiddleware',
-    'cms.middleware.page.CurrentPageMiddleware',
-    'cms.middleware.utils.ApphookReloadMiddleware',
-    'cms.middleware.toolbar.ToolbarMiddleware',
-    # 'django.middleware.cache.FetchFromCacheMiddleware',
+    # 'cms.middleware.language.LanguageCookieMiddleware',
+    # 'cms.middleware.user.CurrentUserMiddleware',
+    # 'cms.middleware.page.CurrentPageMiddleware',
+    # 'cms.middleware.utils.ApphookReloadMiddleware',
+    # 'cms.middleware.toolbar.ToolbarMiddleware',
+    'django.middleware.cache.FetchFromCacheMiddleware',
 ]
 
 ROOT_URLCONF = 'myshop.urls'
@@ -173,27 +173,27 @@ PARLER_LANGUAGES = {
     },
 }
 
-CMS_LANGUAGES = {
-    'default': {
-        'fallbacks': ['de', 'en'],
-        'redirect_on_fallback': True,
-        'public': True,
-        'hide_untranslated': False,
-    },
-    1: [{
-        'public': True,
-        'code': 'de',
-        'hide_untranslated': False,
-        'name': 'De',
-        'redirect_on_fallback': True,
-    }, {
-        'public': True,
-        'code': 'en',
-        'hide_untranslated': False,
-        'name': 'En',
-        'redirect_on_fallback': True,
-    }]
-}
+# CMS_LANGUAGES = {
+#     'default': {
+#         'fallbacks': ['de', 'en'],
+#         'redirect_on_fallback': True,
+#         'public': True,
+#         'hide_untranslated': False,
+#     },
+#     1: [{
+#         'public': True,
+#         'code': 'de',
+#         'hide_untranslated': False,
+#         'name': 'De',
+#         'redirect_on_fallback': True,
+#     }, {
+#         'public': True,
+#         'code': 'en',
+#         'hide_untranslated': False,
+#         'name': 'En',
+#         'redirect_on_fallback': True,
+#     }]
+# }
 USE_L10N = True
 
 USE_TZ = True
@@ -246,8 +246,8 @@ TEMPLATES = [{
             'django.template.context_processors.csrf',
             'django.template.context_processors.request',
             'django.contrib.messages.context_processors.messages',
-            'sekizai.context_processors.sekizai',
-            'cms.context_processors.cms_settings',
+            # 'sekizai.context_processors.sekizai',
+            # 'cms.context_processors.cms_settings',
             'shop.context_processors.customer',
             'shop.context_processors.shop_settings',
             'shop_stripe.context_processors.public_keys',
@@ -423,164 +423,164 @@ THUMBNAIL_PROCESSORS = (
 ############################################
 # settings for django-cms and its plugins
 
-CMS_TEMPLATES = [
-    ('myshop/pages/default.html', _("Default Page")),
-]
-
-CMS_CACHE_DURATIONS = {
-    'content': 600,
-    'menus': 3600,
-    'permissions': 86400,
-}
-
-CMS_PERMISSION = True
-
-CMS_PLACEHOLDER_CONF = {
-    'Breadcrumb': {
-        'plugins': ['BreadcrumbPlugin'],
-        'parent_classes': {'BreadcrumbPlugin': None},
-    },
-    'Commodity Details': {
-        'plugins': ['BootstrapContainerPlugin', 'BootstrapJumbotronPlugin'],
-        'parent_classes': {
-            'BootstrapContainerPlugin': None,
-            'BootstrapJumbotronPlugin': None,
-        },
-    },
-    'Main Content': {
-        'plugins': ['BootstrapContainerPlugin', 'BootstrapJumbotronPlugin'],
-        'parent_classes': {
-            'BootstrapContainerPlugin': None,
-            'BootstrapJumbotronPlugin': None,
-            'TextLinkPlugin': ['TextPlugin', 'AcceptConditionPlugin'],
-        },
-    },
-    'Static Footer': {
-        'plugins': ['BootstrapContainerPlugin', 'BootstrapJumbotronPlugin'],
-        'parent_classes': {
-            'BootstrapContainerPlugin': None,
-            'BootstrapJumbotronPlugin': None,
-        },
-    },
-}
-
-CMSPLUGIN_CASCADE_PLUGINS = [
-    'cmsplugin_cascade.bootstrap4',
-    'cmsplugin_cascade.segmentation',
-    'cmsplugin_cascade.generic',
-    'cmsplugin_cascade.icon',
-    'cmsplugin_cascade.leaflet',
-    'cmsplugin_cascade.link',
-    'shop.cascade',
-]
-
-CMSPLUGIN_CASCADE = {
-    'link_plugin_classes': [
-        'shop.cascade.plugin_base.CatalogLinkPluginBase',
-        'shop.cascade.plugin_base.CatalogLinkForm',
-    ],
-    'alien_plugins': ['TextPlugin', 'TextLinkPlugin', 'AcceptConditionPlugin'],
-    'bootstrap4': {
-        'template_basedir': 'angular-ui/',
-    },
-    'plugins_with_extra_render_templates': {
-        'CustomSnippetPlugin': [
-            ('shop/catalog/product-heading.html', _("Product Heading")),
-            ('myshop/catalog/manufacturer-filter.html', _("Manufacturer Filter")),
-        ],
-        # required to purchase real estate
-        'ShopAddToCartPlugin': [
-            (None, _("Default")),
-            ('myshop/catalog/commodity-add2cart.html', _("Add Commodity to Cart")),
-        ],
-    },
-    'plugins_with_sharables': {
-        'BootstrapImagePlugin': ['image_shapes', 'image_width_responsive', 'image_width_fixed',
-                                 'image_height', 'resize_options'],
-        'BootstrapPicturePlugin': ['image_shapes', 'responsive_heights', 'responsive_zoom', 'resize_options'],
-    },
-    'plugins_with_extra_fields': {
-        'BootstrapCardPlugin': PluginExtraFieldsConfig(),
-        'BootstrapCardHeaderPlugin': PluginExtraFieldsConfig(),
-        'BootstrapCardBodyPlugin': PluginExtraFieldsConfig(),
-        'BootstrapCardFooterPlugin': PluginExtraFieldsConfig(),
-        'SimpleIconPlugin': PluginExtraFieldsConfig(),
-    },
-    'plugins_with_extra_mixins': {
-        'BootstrapContainerPlugin': BootstrapUtilities(),
-        'BootstrapRowPlugin': BootstrapUtilities(BootstrapUtilities.paddings),
-        'BootstrapYoutubePlugin': BootstrapUtilities(BootstrapUtilities.margins),
-        'BootstrapButtonPlugin': BootstrapUtilities(BootstrapUtilities.floats),
-    },
-    'leaflet': {
-        'tilesURL': 'https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}',
-        'accessToken': 'pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw',
-        'apiKey': 'AIzaSyD71sHrtkZMnLqTbgRmY_NsO0A9l9BQmv4',
-    },
-    'bookmark_prefix': '/',
-    'segmentation_mixins': [
-        ('shop.cascade.segmentation.EmulateCustomerModelMixin',
-         'shop.cascade.segmentation.EmulateCustomerAdminMixin'),
-    ],
-    'allow_plugin_hiding': True,
-    'register_page_editor': True,
-}
-
-CKEDITOR_SETTINGS = {
-    'language': '{{ language }}',
-    'skin': 'moono-lisa',
-    'toolbar_CMS': [
-        ['Undo', 'Redo'],
-        ['cmsplugins', '-', 'ShowBlocks'],
-        ['Format'],
-        ['TextColor', 'BGColor', '-', 'PasteText', 'PasteFromWord'],
-        '/',
-        ['Bold', 'Italic', 'Underline', 'Strike', '-',
-            'Subscript', 'Superscript', '-', 'RemoveFormat'],
-        ['JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock'],
-        ['HorizontalRule'],
-        ['NumberedList', 'BulletedList', 'Outdent', 'Indent'],
-        ['Table', 'Source']
-    ],
-    'stylesSet': format_lazy('default:{}', reverse_lazy('admin:cascade_texteditor_config')),
-}
-
-CKEDITOR_SETTINGS_CAPTION = {
-    'language': '{{ language }}',
-    'skin': 'moono-lisa',
-    'height': 70,
-    'toolbar_HTMLField': [
-        ['Undo', 'Redo'],
-        ['Format', 'Styles'],
-        ['Bold', 'Italic', 'Underline', '-', 'Subscript',
-            'Superscript', '-', 'RemoveFormat'],
-        ['Source']
-    ],
-}
-
-CKEDITOR_SETTINGS_DESCRIPTION = {
-    'language': '{{ language }}',
-    'skin': 'moono-lisa',
-    'height': 250,
-    'toolbar_HTMLField': [
-        ['Undo', 'Redo'],
-        ['cmsplugins', '-', 'ShowBlocks'],
-        ['Format', 'Styles'],
-        ['TextColor', 'BGColor', '-', 'PasteText', 'PasteFromWord'],
-        ['Maximize', ''],
-        '/',
-        ['Bold', 'Italic', 'Underline', '-', 'Subscript',
-            'Superscript', '-', 'RemoveFormat'],
-        ['JustifyLeft', 'JustifyCenter', 'JustifyRight'],
-        ['HorizontalRule'],
-        ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent'],
-        ['Source']
-    ],
-}
-
-SELECT2_CSS = 'node_modules/select2/dist/css/select2.min.css'
-SELECT2_JS = 'node_modules/select2/dist/js/select2.min.js'
-SELECT2_I18N_PATH = 'node_modules/select2/dist/js/i18n'
+# CMS_TEMPLATES = [
+#     ('myshop/pages/default.html', _("Default Page")),
+# ]
+#
+# CMS_CACHE_DURATIONS = {
+#     'content': 600,
+#     'menus': 3600,
+#     'permissions': 86400,
+# }
+#
+# CMS_PERMISSION = True
+#
+# CMS_PLACEHOLDER_CONF = {
+#     'Breadcrumb': {
+#         'plugins': ['BreadcrumbPlugin'],
+#         'parent_classes': {'BreadcrumbPlugin': None},
+#     },
+#     'Commodity Details': {
+#         'plugins': ['BootstrapContainerPlugin', 'BootstrapJumbotronPlugin'],
+#         'parent_classes': {
+#             'BootstrapContainerPlugin': None,
+#             'BootstrapJumbotronPlugin': None,
+#         },
+#     },
+#     'Main Content': {
+#         'plugins': ['BootstrapContainerPlugin', 'BootstrapJumbotronPlugin'],
+#         'parent_classes': {
+#             'BootstrapContainerPlugin': None,
+#             'BootstrapJumbotronPlugin': None,
+#             'TextLinkPlugin': ['TextPlugin', 'AcceptConditionPlugin'],
+#         },
+#     },
+#     'Static Footer': {
+#         'plugins': ['BootstrapContainerPlugin', 'BootstrapJumbotronPlugin'],
+#         'parent_classes': {
+#             'BootstrapContainerPlugin': None,
+#             'BootstrapJumbotronPlugin': None,
+#         },
+#     },
+# }
+#
+# CMSPLUGIN_CASCADE_PLUGINS = [
+#     'cmsplugin_cascade.bootstrap4',
+#     'cmsplugin_cascade.segmentation',
+#     'cmsplugin_cascade.generic',
+#     'cmsplugin_cascade.icon',
+#     'cmsplugin_cascade.leaflet',
+#     'cmsplugin_cascade.link',
+#     'shop.cascade',
+# ]
+#
+# CMSPLUGIN_CASCADE = {
+#     'link_plugin_classes': [
+#         'shop.cascade.plugin_base.CatalogLinkPluginBase',
+#         'shop.cascade.plugin_base.CatalogLinkForm',
+#     ],
+#     'alien_plugins': ['TextPlugin', 'TextLinkPlugin', 'AcceptConditionPlugin'],
+#     'bootstrap4': {
+#         'template_basedir': 'angular-ui/',
+#     },
+#     'plugins_with_extra_render_templates': {
+#         'CustomSnippetPlugin': [
+#             ('shop/catalog/product-heading.html', _("Product Heading")),
+#             ('myshop/catalog/manufacturer-filter.html', _("Manufacturer Filter")),
+#         ],
+#         # required to purchase real estate
+#         'ShopAddToCartPlugin': [
+#             (None, _("Default")),
+#             ('myshop/catalog/commodity-add2cart.html', _("Add Commodity to Cart")),
+#         ],
+#     },
+#     'plugins_with_sharables': {
+#         'BootstrapImagePlugin': ['image_shapes', 'image_width_responsive', 'image_width_fixed',
+#                                  'image_height', 'resize_options'],
+#         'BootstrapPicturePlugin': ['image_shapes', 'responsive_heights', 'responsive_zoom', 'resize_options'],
+#     },
+#     'plugins_with_extra_fields': {
+#         'BootstrapCardPlugin': PluginExtraFieldsConfig(),
+#         'BootstrapCardHeaderPlugin': PluginExtraFieldsConfig(),
+#         'BootstrapCardBodyPlugin': PluginExtraFieldsConfig(),
+#         'BootstrapCardFooterPlugin': PluginExtraFieldsConfig(),
+#         'SimpleIconPlugin': PluginExtraFieldsConfig(),
+#     },
+#     'plugins_with_extra_mixins': {
+#         'BootstrapContainerPlugin': BootstrapUtilities(),
+#         'BootstrapRowPlugin': BootstrapUtilities(BootstrapUtilities.paddings),
+#         'BootstrapYoutubePlugin': BootstrapUtilities(BootstrapUtilities.margins),
+#         'BootstrapButtonPlugin': BootstrapUtilities(BootstrapUtilities.floats),
+#     },
+#     'leaflet': {
+#         'tilesURL': 'https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token={accessToken}',
+#         'accessToken': 'pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw',
+#         'apiKey': 'AIzaSyD71sHrtkZMnLqTbgRmY_NsO0A9l9BQmv4',
+#     },
+#     'bookmark_prefix': '/',
+#     'segmentation_mixins': [
+#         ('shop.cascade.segmentation.EmulateCustomerModelMixin',
+#          'shop.cascade.segmentation.EmulateCustomerAdminMixin'),
+#     ],
+#     'allow_plugin_hiding': True,
+#     'register_page_editor': True,
+# }
+#
+# CKEDITOR_SETTINGS = {
+#     'language': '{{ language }}',
+#     'skin': 'moono-lisa',
+#     'toolbar_CMS': [
+#         ['Undo', 'Redo'],
+#         ['cmsplugins', '-', 'ShowBlocks'],
+#         ['Format'],
+#         ['TextColor', 'BGColor', '-', 'PasteText', 'PasteFromWord'],
+#         '/',
+#         ['Bold', 'Italic', 'Underline', 'Strike', '-',
+#             'Subscript', 'Superscript', '-', 'RemoveFormat'],
+#         ['JustifyLeft', 'JustifyCenter', 'JustifyRight', 'JustifyBlock'],
+#         ['HorizontalRule'],
+#         ['NumberedList', 'BulletedList', 'Outdent', 'Indent'],
+#         ['Table', 'Source']
+#     ],
+#     'stylesSet': format_lazy('default:{}', reverse_lazy('admin:cascade_texteditor_config')),
+# }
+#
+# CKEDITOR_SETTINGS_CAPTION = {
+#     'language': '{{ language }}',
+#     'skin': 'moono-lisa',
+#     'height': 70,
+#     'toolbar_HTMLField': [
+#         ['Undo', 'Redo'],
+#         ['Format', 'Styles'],
+#         ['Bold', 'Italic', 'Underline', '-', 'Subscript',
+#             'Superscript', '-', 'RemoveFormat'],
+#         ['Source']
+#     ],
+# }
+#
+# CKEDITOR_SETTINGS_DESCRIPTION = {
+#     'language': '{{ language }}',
+#     'skin': 'moono-lisa',
+#     'height': 250,
+#     'toolbar_HTMLField': [
+#         ['Undo', 'Redo'],
+#         ['cmsplugins', '-', 'ShowBlocks'],
+#         ['Format', 'Styles'],
+#         ['TextColor', 'BGColor', '-', 'PasteText', 'PasteFromWord'],
+#         ['Maximize', ''],
+#         '/',
+#         ['Bold', 'Italic', 'Underline', '-', 'Subscript',
+#             'Superscript', '-', 'RemoveFormat'],
+#         ['JustifyLeft', 'JustifyCenter', 'JustifyRight'],
+#         ['HorizontalRule'],
+#         ['NumberedList', 'BulletedList', '-', 'Outdent', 'Indent'],
+#         ['Source']
+#     ],
+# }
+#
+# SELECT2_CSS = 'node_modules/select2/dist/css/select2.min.css'
+# SELECT2_JS = 'node_modules/select2/dist/js/select2.min.js'
+# SELECT2_I18N_PATH = 'node_modules/select2/dist/js/i18n'
 
 
 #############################################
@@ -603,13 +603,13 @@ SHOP_EDITCART_NG_MODEL_OPTIONS = "{updateOn: 'default blur', debounce: {'default
 
 SHOP_CART_MODIFIERS = [
     'myshop.modifiers.PrimaryCartModifier',
-    'shop.modifiers.taxes.CartExcludedTaxModifier',
+    'shop.shopmodifiers.taxes.CartExcludedTaxModifier',
     'myshop.modifiers.PostalShippingModifier',
-    'shop_paypal.modifiers.PaymentModifier',
+    # 'shop_paypal.modifiers.PaymentModifier',
     'myshop.modifiers.StripePaymentModifier',
     'shop.payment.modifiers.PayInAdvanceModifier',
-    'shop_sendcloud.modifiers.SendcloudShippingModifiers',
-    'shop.modifiers.defaults.WeightedCartModifier',
+    # 'shop_sendcloud.modifiers.SendcloudShippingModifiers',
+    'shop.shopmodifiers.defaults.WeightedCartModifier',
     'shop.shipping.modifiers.SelfCollectionModifier',
 ]
 
@@ -617,17 +617,17 @@ SHOP_ORDER_WORKFLOWS = [
     'shop.payment.workflows.ManualPaymentWorkflowMixin',
     'shop.payment.workflows.CancelOrderWorkflowMixin',
     'shop.shipping.workflows.PartialDeliveryWorkflowMixin',
-    'shop_paypal.payment.OrderWorkflowMixin',
+    # 'shop_paypal.payment.OrderWorkflowMixin',
     'shop_stripe.workflows.OrderWorkflowMixin',
 ]
 
-SHOP_PAYPAL = {
-    'API_ENDPOINT': 'https://api.sandbox.paypal.com',
-    'MODE': 'sandbox',
-    'CLIENT_ID': os.getenv('PAYPAL_CLIENT_ID'),
-    'CLIENT_SECRET': os.getenv('PAYPAL_CLIENT_SECRET'),
-    'PURCHASE_DESCRIPTION': _("Thanks for purchasing at My SHOP"),
-}
+# SHOP_PAYPAL = {
+#     'API_ENDPOINT': 'https://api.sandbox.paypal.com',
+#     'MODE': 'sandbox',
+#     'CLIENT_ID': os.getenv('PAYPAL_CLIENT_ID'),
+#     'CLIENT_SECRET': os.getenv('PAYPAL_CLIENT_SECRET'),
+#     'PURCHASE_DESCRIPTION': _("Thanks for purchasing at My SHOP"),
+# }
 
 SHOP_STRIPE = {
     'PUBKEY': os.getenv('STRIPE_PUBKEY', 'pk_test_HlEp5oZyPonE21svenqowhXp'),
@@ -636,14 +636,14 @@ SHOP_STRIPE = {
 }
 SHOP_STRIPE_PREFILL = True
 
-SHOP_SENDCLOUD = {
-    'API_KEY': os.getenv('SENDCLOUD_PUBLIC_KEY'),
-    'API_SECRET': os.getenv('SENDCLOUD_SECRET_KEY'),
-}
-
-SHOP_CASCADE_FORMS = {
-    'CustomerForm': 'myshop.forms.CustomerForm',
-}
+# SHOP_SENDCLOUD = {
+#     'API_KEY': os.getenv('SENDCLOUD_PUBLIC_KEY'),
+#     'API_SECRET': os.getenv('SENDCLOUD_SECRET_KEY'),
+# }
+#
+# SHOP_CASCADE_FORMS = {
+#     'CustomerForm': 'myshop.forms.CustomerForm',
+# }
 
 # Swagger settings.
 SWAGGER_SETTINGS = {

@@ -1,5 +1,5 @@
 
-from shop.models.cart import CartModel
+from shop.shopmodels.cart import CartModel
 from shop.serializers.defaults.catalog import AddToCartSerializer
 
 

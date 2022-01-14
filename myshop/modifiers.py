@@ -1,7 +1,7 @@
 from django.core.exceptions import ValidationError
 from django.utils.translation import ugettext_lazy as _
-from shop.modifiers.pool import cart_modifiers_pool
-from shop.modifiers.defaults import DefaultCartModifier
+from shop.shopmodifiers.pool import cart_modifiers_pool
+from shop.shopmodifiers.defaults import DefaultCartModifier
 from shop.serializers.cart import ExtraCartRow
 from shop.money import Money
 from shop.shipping.modifiers import ShippingModifier

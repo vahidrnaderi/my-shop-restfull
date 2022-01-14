@@ -1,26 +1,28 @@
-from shop.cms_apphooks import CatalogSearchApp
+# from shop.cms_apphooks import CatalogSearchApp
 from django.conf.urls import url
 from rest_framework.settings import api_settings
 
-from cms.apphook_pool import apphook_pool
-from cms.cms_menus import SoftRootCutter
+# from cms.apphook_pool import apphook_pool
+# from cms.cms_menus import SoftRootCutter
 from menus.menu_pool import menu_pool
 
-from shop.cms_apphooks import CatalogListCMSApp, CatalogSearchApp, OrderApp, PasswordResetApp
-from shop.rest.filters import CMSPagesFilterBackend
+# from shop.cms_apphooks import CatalogListCMSApp, CatalogSearchApp, OrderApp, PasswordResetApp
+# from shop.rest.filters import CMSPagesFilterBackend
 
 
-class CatalogListApp(CatalogListCMSApp):
+# class CatalogListApp(CatalogListCMSApp):
+class CatalogListApp:
     def get_urls(self, page=None, language=None, **kwargs):
-        from shop.search.mixins import ProductSearchViewMixin
+        # from shop.search.mixins import ProductSearchViewMixin
         from shop.views.catalog import AddToCartView, ProductListView, ProductRetrieveView
-        from shop.views.catalog import AddFilterContextMixin
+        # from shop.views.catalog import AddFilterContextMixin
         from myshop.filters import ManufacturerFilterSet
         from myshop.serializers import AddSmartPhoneToCartSerializer
 
-        ProductListView = type(
-            'ProductSearchListView', (AddFilterContextMixin, ProductSearchViewMixin, ProductListView), {})
-        filter_backends = [CMSPagesFilterBackend]
+        # ProductListView = type(
+        #     'ProductSearchListView', (AddFilterContextMixin, ProductSearchViewMixin, ProductListView), {})
+        # filter_backends = [CMSPagesFilterBackend]
+        filter_backends = []
         filter_backends.extend(api_settings.DEFAULT_FILTER_BACKENDS)
         return [
             url(r'^(?P<slug>[\w-]+)/add-to-cart', AddToCartView.as_view()),
@@ -37,14 +39,14 @@ class CatalogListApp(CatalogListCMSApp):
         ]
 
 
-apphook_pool.register(CatalogListApp)
-
-
-apphook_pool.register(CatalogSearchApp)
-
-apphook_pool.register(OrderApp)
-
-apphook_pool.register(PasswordResetApp)
+# apphook_pool.register(CatalogListApp)
+#
+#
+# apphook_pool.register(CatalogSearchApp)
+#
+# apphook_pool.register(OrderApp)
+#
+# apphook_pool.register(PasswordResetApp)
 
 
 def _deregister_menu_pool_modifier(Modifier):
@@ -57,4 +59,4 @@ def _deregister_menu_pool_modifier(Modifier):
         menu_pool.modifiers.pop(index)
 
 
-_deregister_menu_pool_modifier(SoftRootCutter)
+# _deregister_menu_pool_modifier(SoftRootCutter)

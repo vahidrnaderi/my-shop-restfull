@@ -6,15 +6,16 @@ from django.utils.html import format_html
 from django.utils.translation import ugettext_lazy as _
 from parler.admin import TranslatableAdmin
 from filer.models import ThumbnailOption
-from cms.admin.placeholderadmin import PlaceholderAdminMixin, FrontendEditableAdminMixin
+# from cms.admin.placeholderadmin import PlaceholderAdminMixin, FrontendEditableAdminMixin
 from shop.admin.defaults import customer
 from shop.admin.defaults.order import OrderAdmin
-from shop.models.defaults.order import Order
+from shop.shopmodels.defaults.order import Order
 from shop.admin.order import PrintInvoiceAdminMixin
 from shop.admin.delivery import DeliveryOrderAdminMixin
-from shop_sendcloud.admin import SendCloudOrderAdminMixin
+# from shop_sendcloud.admin import SendCloudOrderAdminMixin
 from adminsortable2.admin import SortableAdminMixin, PolymorphicSortableAdminMixin
-from shop.admin.product import CMSPageAsCategoryMixin, UnitPriceMixin, ProductImageInline, InvalidateProductCacheMixin, SearchProductIndexMixin, CMSPageFilter
+# from shop.admin.product import CMSPageAsCategoryMixin, UnitPriceMixin, ProductImageInline, InvalidateProductCacheMixin, SearchProductIndexMixin, CMSPageFilter
+from shop.admin.product import UnitPriceMixin, ProductImageInline, InvalidateProductCacheMixin, SearchProductIndexMixin
 from polymorphic.admin import (PolymorphicParentModelAdmin, PolymorphicChildModelAdmin,
                                PolymorphicChildModelFilter)
 from myshop.models import Product, Commodity, SmartPhoneVariant, SmartPhoneModel, OperatingSystem, Book
@@ -26,9 +27,9 @@ admin.site.site_header = "My SHOP Administration"
 admin.site.unregister(ThumbnailOption)
 
 
-@admin.register(Order)
-class OrderAdmin(PrintInvoiceAdminMixin, SendCloudOrderAdminMixin, DeliveryOrderAdminMixin, OrderAdmin):
-    pass
+# @admin.register(Order)
+# class OrderAdmin(PrintInvoiceAdminMixin, SendCloudOrderAdminMixin, DeliveryOrderAdminMixin, OrderAdmin):
+#     pass
 
 
 admin.site.register(Manufacturer, admin.ModelAdmin)
@@ -52,8 +53,10 @@ class BookInventoryAdmin(admin.StackedInline):
 
 
 @admin.register(Commodity)
-class CommodityAdmin(InvalidateProductCacheMixin, SearchProductIndexMixin, SortableAdminMixin, TranslatableAdmin, FrontendEditableAdminMixin,
-                     PlaceholderAdminMixin, CMSPageAsCategoryMixin, PolymorphicChildModelAdmin):
+# class CommodityAdmin(InvalidateProductCacheMixin, SearchProductIndexMixin, SortableAdminMixin, TranslatableAdmin, FrontendEditableAdminMixin,
+#                      PlaceholderAdminMixin, CMSPageAsCategoryMixin, PolymorphicChildModelAdmin):
+class CommodityAdmin(InvalidateProductCacheMixin, SearchProductIndexMixin, SortableAdminMixin, TranslatableAdmin,
+                     PolymorphicChildModelAdmin):
     """
     Since our Commodity model inherits from polymorphic Product, we have to redefine its admin class.
     """
@@ -65,14 +68,16 @@ class CommodityAdmin(InvalidateProductCacheMixin, SearchProductIndexMixin, Sorta
         'caption',
         'manufacturer',
     ]
-    filter_horizontal = ['cms_pages']
+    # filter_horizontal = ['cms_pages']
     inlines = [ProductImageInline, CommodityInventoryAdmin]
     prepopulated_fields = {'slug': ['product_name']}
 
 
 @admin.register(SmartCard)
-class SmartCardAdmin(InvalidateProductCacheMixin, SearchProductIndexMixin, SortableAdminMixin, TranslatableAdmin, FrontendEditableAdminMixin,
-                     CMSPageAsCategoryMixin, PlaceholderAdminMixin, PolymorphicChildModelAdmin):
+class SmartCardAdmin(InvalidateProductCacheMixin, SearchProductIndexMixin, SortableAdminMixin, TranslatableAdmin,
+                     PolymorphicChildModelAdmin):
+# class SmartCardAdmin(InvalidateProductCacheMixin, SearchProductIndexMixin, SortableAdminMixin, TranslatableAdmin, FrontendEditableAdminMixin,
+#                      CMSPageAsCategoryMixin, PlaceholderAdminMixin, PolymorphicChildModelAdmin):
     base_model = Product
     fieldsets = (
         (None, {
@@ -89,14 +94,16 @@ class SmartCardAdmin(InvalidateProductCacheMixin, SearchProductIndexMixin, Sorta
             'fields': ['manufacturer', 'storage', 'card_type', 'speed'],
         }),
     )
-    filter_horizontal = ['cms_pages']
+    # filter_horizontal = ['cms_pages']
     inlines = [ProductImageInline, SmartCardInventoryAdmin]
     prepopulated_fields = {'slug': ['product_name']}
 
 
 @admin.register(Book)
-class BookAdmin(InvalidateProductCacheMixin, SearchProductIndexMixin, SortableAdminMixin, TranslatableAdmin, FrontendEditableAdminMixin,
-                     CMSPageAsCategoryMixin, PlaceholderAdminMixin, PolymorphicChildModelAdmin):
+class BookAdmin(InvalidateProductCacheMixin, SearchProductIndexMixin, SortableAdminMixin, TranslatableAdmin,
+                    PolymorphicChildModelAdmin):
+# class BookAdmin(InvalidateProductCacheMixin, SearchProductIndexMixin, SortableAdminMixin, TranslatableAdmin, FrontendEditableAdminMixin,
+#                      CMSPageAsCategoryMixin, PlaceholderAdminMixin, PolymorphicChildModelAdmin):
     base_model = Product
     fieldsets = (
         (None, {
@@ -113,7 +120,7 @@ class BookAdmin(InvalidateProductCacheMixin, SearchProductIndexMixin, SortableAd
             'fields': ['manufacturer', 'Author', 'book_type'],
         }),
     )
-    filter_horizontal = ['cms_pages']
+    # filter_horizontal = ['cms_pages']
     inlines = [ProductImageInline, BookInventoryAdmin]
     prepopulated_fields = {'slug': ['product_name']}
 
@@ -143,8 +150,10 @@ class SmartPhoneInline(admin.TabularInline):
 
 
 @admin.register(SmartPhoneModel)
-class SmartPhoneAdmin(InvalidateProductCacheMixin, SearchProductIndexMixin, SortableAdminMixin, TranslatableAdmin, FrontendEditableAdminMixin,
-                      CMSPageAsCategoryMixin, PlaceholderAdminMixin, PolymorphicChildModelAdmin):
+class SmartPhoneAdmin(InvalidateProductCacheMixin, SearchProductIndexMixin, SortableAdminMixin, TranslatableAdmin,
+                      PolymorphicChildModelAdmin):
+# class SmartPhoneAdmin(InvalidateProductCacheMixin, SearchProductIndexMixin, SortableAdminMixin, TranslatableAdmin, FrontendEditableAdminMixin,
+#                       CMSPageAsCategoryMixin, PlaceholderAdminMixin, PolymorphicChildModelAdmin):
     base_model = Product
     fieldsets = [
         (None, {
@@ -162,7 +171,7 @@ class SmartPhoneAdmin(InvalidateProductCacheMixin, SearchProductIndexMixin, Sort
                        ('width', 'height', 'weight',), 'screen_size'],
         }),
     ]
-    filter_horizontal = ['cms_pages']
+    # filter_horizontal = ['cms_pages']
     inlines = [ProductImageInline, SmartPhoneInline]
     prepopulated_fields = {'slug': ['product_name']}
 
@@ -192,7 +201,8 @@ class ProductAdmin(PolymorphicSortableAdminMixin, PolymorphicParentModelAdmin):
     list_display = ['product_name', 'get_price', 'product_type', 'active']
     list_display_links = ['product_name']
     search_fields = ['product_name']
-    list_filter = [PolymorphicChildModelFilter, CMSPageFilter]
+    list_filter = [PolymorphicChildModelFilter]
+    # list_filter = [PolymorphicChildModelFilter, CMSPageFilter]
     list_per_page = 250
     list_max_show_all = 1000
 
